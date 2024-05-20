@@ -1,0 +1,15 @@
+downloading file and extracting we get a tar ball
+extract the tar ball and we get a wannacry executable and a flag file
+
+the flag file is encrypted and wannacry is a decryptor
+
+running strings wannacry | grep h4ck1ng returns a url which contains 200 key files
+
+running the brute_force script runs all keys with the decryptor and saves them as a .decrypted file
+
+running file *.decrypted | grep -v data     returns 10 or so results that aren't gibberish 'data'
+
+there is one ASCII text result
+
+examining this file returns the flag:
+https://h4ck1ng.google/solve/CrY_n0_m0r3

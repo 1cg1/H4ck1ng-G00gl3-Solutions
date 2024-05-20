@@ -1,0 +1,17 @@
+a bit long winded so will link to articles that i referenced for static analysis of the binary and also debugging
+
+[1] https://blog.lohr.dev/hacking-google-ctf-episode-1
+[2] https://medium.com/@p-v-p/h4ck1ng-g00gl3-ep001-challenge-02-wannacry-v2-928eba571cd2
+
+TL;DR
+run strings wannacry | grep h4ck1ng
+this gets us the url which gives us cryptic message
+use GHIDRA to statically analyse the binary, can see that it uses current time and a wordlist to generate the current valid url to get the flag from
+
+use gdb to debug with following commands (from [1]):
+break main # we want to set a breakpoint in the main method before the software exists
+run # run the program until we hit our breakpoint
+jump print # continue to execute the program in the print function
+
+this presents us with the current valid url which after interacting points us to the flag:
+https://h4ck1ng.google/solve/who_turned_off_the_lights
